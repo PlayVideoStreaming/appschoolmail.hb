@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Envelope Abrindo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    .envelope {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      background-color: #49c2e3;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      padding-top: 20px;
+      transition: transform 1s ease-in-out;
+    }
+
+    /* Aba superior (triangular) */
+    .flap-top {
+      position: absolute;
+      width: 100%;
+      height: 50%;
+      background-color: #31b2d6;
+      clip-path: polygon(0 0, 100% 0, 50% 100%); /* Triângulo com vértice para baixo */
+      top: 0;
+      transform-origin: top center;
+      transition: transform 1s ease-in-out;
+      z-index: 0; /* Coloca o triângulo atrás do corpo */
+      border-top-left-radius: 10px; /* Bordas arredondadas no topo esquerdo */
+      border-top-right-radius: 10px; /* Bordas arredondadas no topo direito */
+ }
+    /* Corpo do envelope, onde a mensagem aparece */
+    .body {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column; /* Organiza a imagem e o texto em coluna */
+      justify-content: center;
+      align-items: center;
+      font-family: 'Quicksand', sans-serif;
+      color: #333;
+      font-size: 16;
+      opacity: 0;
+      border-radius: 10px; /* Bordas arredondadas na parte branca */
+      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+      z-index: 1; /* Coloca o corpo branco na frente do triângulo */
+      padding: 10px;
+      word-wrap: break-word; /* Garante que o texto que ultrapassar a largura da div quebre a linha */
+    }
+
+    /* Quando o envelope for aberto, a aba superior gira e fica com a ponta para cima */
+    .envelope.open .flap-top {
+      transform: rotateX(180deg); /* Apenas a rotação do triângulo */
+    }
+
+    /* Quando o envelope for aberto, a mensagem se torna visível (com atraso de 1 segundo) */
+    .envelope.open .body {
+      opacity: 1;
+      transition-delay: 1s; /* Atraso de 1 segundo para a visibilidade */
+    }
+
+    /* Efeito de expansão do envelope */
+    .envelope.open.expand .body {
+      transform: translate(-50%, -50%) scale(3); /* Aumenta o tamanho do corpo */
+    }
+
+    /* Estilo da imagem dentro do envelope */
+    .image {
+      width: 50px; /* Imagem bem menor */
+      margin-bottom: 17px; /* Mudei a margem inferior para aproximar a imagem do topo */
+    }
+
+    .text {
+      font-weight: 600; /* SemiBold */
+      font-size: 14px
+      margin-bottom: 0; /* Removi a margem para colar o botão embaixo do texto */
+      margin-top: -10px; /* Mudei a margem para cima do texto */
+    }
+
+    /* Estilo do botão "Fazer login" */
+    .login-btn {
+      margin-top: 12px; /* Removi a margem superior para colar o botão embaixo do texto */
+      padding: 10px 20px;
+      background-color: #00bcd4; /* Cor ciano */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Quicksand', sans-serif; /* Mesma fonte que o texto */
+      transition: background-color 0.3s;
+    }
+
+    .login-btn:hover {
+      background-color: #0097a7; /* Cor mais escura para o efeito de hover */
+    }
+  </style>
+</head>
+<body>
+
+<div class="envelope" id="envelope">
+  <div class="flap-top"></div>
+  <div class="body">
+    <!-- Imagem acima do texto -->
+    <img src="https://i.ibb.co/hJ781pdz/IMG-0025.png" alt="Imagem" class="image">
+    <p class="text">E-mail: hadassaburbon.pre1prof@asprof.com  Senha: HadassaAS</p>
+    
+    <!-- Botão "Fazer Login" -->
+    <button class="login-btn" onclick="window.location.href='sites.google.com/view/appschoollogin';">Fazer Login</button>
+  </div>
+</div>
+
+<script>
+  const envelope = document.getElementById('envelope');
+
+  // Flag para garantir que o clique aconteça apenas uma vez
+  let clicked = false;
+
+  // Evento de clique para abrir ou fechar o envelope
+  envelope.addEventListener('click', function () {
+    if (!clicked) {
+      clicked = true; // Marca que o envelope foi clicado
+
+      envelope.classList.add('open'); // Adiciona a classe open imediatamente
+
+      // Após 1 segundo, expandir a parte branca do envelope
+      setTimeout(function () {
+        envelope.classList.add('expand'); // Expande a parte branca do envelope
+      }, 1000); // Atraso de 1 segundo para a expansão
+    }
+  });
+</script>
+
+</body>
+</html>
+
+</body>
+</html>
